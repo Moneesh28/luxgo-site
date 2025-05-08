@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Your Ride | LuxGo</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      color: #3a3a3a;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
+      background-color: #f7f7f7;
+    }
+
+    button {
+      background-color: #0066cc;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #004d99;
+    }
+
+    .flash-msg {
+      color: red;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .flash-msg li {
+      background-color: #ffe5e5;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+    <div class="form-container">
+      <h2>Book Your Selfdrive Car</h2>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash-msg">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+      <form action="/submit" method="POST" onsubmit="return validateForm()">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required pattern="\d{10}">
+        <input type="text" name="pickup_location" placeholder="Pickup Location" required>
+        <input type="text" name="drop_location" placeholder="Drop Location" required>
+        <label>Pickup Date</label>
+        <input type="date" name="pickup_date" required>
+        <label>Return Date</label>
+        <input type="date" name="return_date" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  
+    <script>
+      function validateForm() {
+        const phone = document.querySelector('input[name="phone"]').value.trim();
+        const phonePattern = /^\d{10}$/;
+    
+        if (!phonePattern.test(phone)) {
+          alert("Please enter a valid 10-digit phone number.");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
+</html>
